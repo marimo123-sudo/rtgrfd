@@ -24,31 +24,32 @@ button {
   font-family: Inter;
   font-weight: 400;
   font-size: 3vh;
-  height: 8vh;
-  width: calc(100% - 18px); /* Отступы по 9px слева и справа */
+  height: 6vh;
+  width: calc(100% - 6%); /* Отступы по 9px слева и справа */
   border-radius: 2vh;
   border: none;
   user-select: none;
   cursor: pointer;
-  margin-top: 15px;/* Отступ сверху для кнопки */
+  bottom: -7vh;
 }
 
 .white_square {
-  width: calc(100% - 60px); /* Отступы по 9px слева и справа */
-  height: 90%; /* высота квадрата */
+  width: calc(100% - 10%); /* Отступы по 9px слева и справа */
+  height: calc(100% - 30%); /* высота квадрата */
   background: #fffdfd;
   position: relative;
   border-radius: 2vh;
+  top: 5%;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 20px; /* Внутренний отступ */
+  padding: 1vh; /* Внутренний отступ */
 }
 
 .ton_pic {
-  width: 15vw; /* Примерная ширина для изображения, подкорректируйте по необходимости */
+  width: 20vw; /* Примерная ширина для изображения, подкорректируйте по необходимости */
   height: auto;
   margin-top: 4vh;
   margin-bottom: 4vh;
@@ -68,7 +69,7 @@ button {
 
 .text {
   user-select: none;
-  font-size: 3vh;
+  font-size: 2vh;
   font-family: Inter;
   font-weight: 400;
   text-align: center;
