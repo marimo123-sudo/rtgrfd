@@ -78,12 +78,12 @@ button {
 
 /* Стили для темного режима */
 .dark-mode .background {
-  background-color: #000000;
+  background-color: #1a1a1a;
   color: #fff;
 }
 
 .dark-mode .white_square {
-  background-color: #1c1c1c;
+  background-color: #2e2e2e;
 }
 
 .dark-mode .create_profile {
