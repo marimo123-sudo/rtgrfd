@@ -20,14 +20,14 @@ body, html {
 }
 
 button {
+  position: relative;
   font-family: Inter;
   font-weight: 400;
-  font-size: 20px;
-  height: 9vh;
+  font-size: 3vh;
+  height: 8vh;
   width: calc(100% - 18px); /* Отступы по 9px слева и справа */
-  border-radius: 10px;
+  border-radius: 2vh;
   border: none;
-  bottom: 5px;
   user-select: none;
   cursor: pointer;
   margin-top: 15px;/* Отступ сверху для кнопки */
@@ -35,11 +35,10 @@ button {
 
 .white_square {
   width: calc(100% - 60px); /* Отступы по 9px слева и справа */
-  height: calc(100vh - 9px - 50px); /* высота квадрата */
+  height: 90%; /* высота квадрата */
   background: #fffdfd;
   position: relative;
-  border-radius: 10px;
-  top: 9px;
+  border-radius: 2vh;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   display: flex;
   flex-direction: column;
@@ -49,33 +48,32 @@ button {
 }
 
 .ton_pic {
-  width: 50px; /* Примерная ширина для изображения, подкорректируйте по необходимости */
+  width: 15vw; /* Примерная ширина для изображения, подкорректируйте по необходимости */
   height: auto;
-  margin-top: 20px;
-  margin-bottom: 20px;
+  margin-top: 4vh;
+  margin-bottom: 4vh;
 }
 
 .ton_work {
   color: black;
-  width: 140px;
   font-family: Inter;
   font-style: normal;
   font-weight: 900;
-  font-size: 19px;
+  font-size: 3vh;
   line-height: 24px;
   text-align: center;
-  margin-top: 20px;
-  margin-bottom: 20px;
+  margin-top: 4vh;
+  margin-bottom: 4vh;
 }
 
 .text {
   user-select: none;
-  font-size: 17px;
+  font-size: 3vh;
   font-family: Inter;
   font-weight: 400;
   text-align: center;
-  margin-top: 20px;
-  margin-bottom: 20px;
+  margin-top: 4vh;
+  margin-bottom: 4vh;
 }
 
 /* Стили для темного режима */
