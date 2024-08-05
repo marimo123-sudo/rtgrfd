@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <script src="telegramWebApp.js"></script>
     <meta charset="UTF-8">
     <title>Telegram Mini App</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link rel="stylesheet" href="index.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;400;700&display=swap" rel="stylesheet">
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
 </head>
 <body>
     <div class="background">
@@ -21,52 +21,6 @@
         </div>
         <button type="button" onclick="window.location.href='create_acc/create_acc.html'" name="button" class='create_profile'>Create Profile</button>
     </div>
-    <script>
-        document.addEventListener('DOMContentLoaded', (event) => {
-            Telegram.WebApp.ready();
-            Telegram.WebApp.setBackgroundColor('#000000'); // Устанавливаем черный цвет рамки
-
-            const user = Telegram.WebApp.initDataUnsafe.user;
-            if (user) {
-                console.log(`User ID: ${user.id}`);
-            } else {
-                console.error('Unable to get user information from Telegram WebApp.');
-            }
-
-            // Проверяем версию API
-            const webAppVersion = Telegram.WebApp.version;
-            console.log(`Web App API version: ${webAppVersion}`);
-
-            function versionAtLeast(version) {
-                const [major, minor] = version.split('.').map(Number);
-                const [currentMajor, currentMinor] = webAppVersion.split('.').map(Number);
-                return (currentMajor > major) || (currentMajor === major && currentMinor >= minor);
-            }
-
-            var isVerticalSwipesEnabled = true;
-            function toggleVerticalSwipes(enable_swipes) {
-                if (!versionAtLeast('7.7')) {
-                    console.warn('[Telegram.WebApp] Changing swipes behavior is not supported in version ' + webAppVersion);
-                    return;
-                }
-                isVerticalSwipesEnabled = !!enable_swipes;
-                Telegram.WebApp.MainButton.web_app_setup_swipe_behavior({allow_vertical_swipe: isVerticalSwipesEnabled});
-            }
-
-            // Включаем вертикальные свайпы
-            toggleVerticalSwipes(true);
-
-            // Запрещаем изменение масштаба через жесты на устройствах с сенсорным экраном
-            document.addEventListener('gesturestart', function (e) {
-                e.preventDefault();
-            });
-
-            document.addEventListener('touchmove', function (event) {
-                if (event.scale !== 1) {
-                    event.preventDefault();
-                }
-            }, { passive: false });
-        });
-    </script>
+    <script src="index.js"></script>
 </body>
 </html>
