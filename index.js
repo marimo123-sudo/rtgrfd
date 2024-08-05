@@ -38,20 +38,11 @@ document.addEventListener('DOMContentLoaded', (event) => {
   }
 
   // Включаем вертикальные свайпы
-  if (versionAtLeast('7.7')) {
-    Telegram.WebApp.toggleVerticalSwipes(true);
-  } else {
-    console.warn(`Vertical swipes are not supported in version ${Telegram.WebApp.version}`);
-  }
+  Telegram.WebApp.isisVerticalSwipesEnabled = true
 
   // Запрещаем изменение масштаба через жесты на устройствах с сенсорным экраном
   document.addEventListener('gesturestart', function (e) {
     e.preventDefault();
   });
 
-  document.addEventListener('touchmove', function (event) {
-    if (event.scale !== 1) {
-      event.preventDefault();
-    }
-  }, { passive: false });
 });
