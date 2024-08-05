@@ -20,7 +20,7 @@ if (window.devicePixelRatio !== 1) { // Костыль для определен
 document.addEventListener('DOMContentLoaded', (event) => {
   Telegram.WebApp.ready();
   Telegram.WebApp.setHeaderColor('#000000'); // Устанавливаем черный цвет рамки
-
+  Telegram.WebApp.expand();
   const user = Telegram.WebApp.initDataUnsafe.user;
   if (user) {
     console.log(`User ID: ${user.id}`);
@@ -38,11 +38,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
   }
 
   // Включаем вертикальные свайпы
-  Telegram.WebApp.isisVerticalSwipesEnabled = true
-
-  // Запрещаем изменение масштаба через жесты на устройствах с сенсорным экраном
-  document.addEventListener('gesturestart', function (e) {
-    e.preventDefault();
-  });
+  Telegram.WebApp.isVerticalSwipesEnabled = true
 
 });
