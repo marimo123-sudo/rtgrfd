@@ -1,66 +1,64 @@
-  // Проверяем, какая тема у пользователя и применяем соответствующие стили
-if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-  document.body.classList.add('dark-mode');
-}
-
-  // Обработчик изменения темы
-window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
-    const newColorScheme = e.matches ? "dark" : "light";
-    document.body.classList.toggle('dark-mode', e.matches);
-});
-
-if (window.devicePixelRatio !== 1) { // Костыль для определения иных устройств, с коэффициентом отличным от 1		
-  var dpt = window.devicePixelRatio;
-  var widthM = window.screen.width * dpt;
-  var widthH = window.screen.height * dpt;
-  document.write('<meta name="viewport" content="width=' + widthM+ ', height=' + widthH + '">');
-}
-
-
-
-
-document.addEventListener('DOMContentLoaded', (event) => {
-  Telegram.WebApp.ready();
-  Telegram.WebApp.setBackgroundColor('#000000'); // Устанавливаем черный цвет рамки
-
-  const user = Telegram.WebApp.initDataUnsafe.user;
-  if (user) {
-      console.log(`User ID: ${user.id}`);
-  } else {
-      console.log('Unable to get user information from Telegram WebApp.');
-  }
-
-  // Проверяем версию API
-  const webAppVersion = Telegram.WebApp.version;
-  console.log(`Web App API version: ${webAppVersion}`);
-
-  function versionAtLeast(version) {
-      const [major, minor] = version.split('.').map(Number);
-      const [currentMajor, currentMinor] = webAppVersion.split('.').map(Number);
-      return (currentMajor > major) || (currentMajor === major && currentMinor >= minor);
-  }
-
-  var isVerticalSwipesEnabled = true;
-  function toggleVerticalSwipes(enable_swipes) {
-      if (!versionAtLeast('7.7')) {
-          console.warn('[Telegram.WebApp] Changing swipes behavior is not supported in version ' + webAppVersion);
-          return;
-      }
-      isVerticalSwipesEnabled = !!enable_swipes;
-      Telegram.WebApp.MainButton.web_app_setup_swipe_behavior({allow_vertical_swipe: isVerticalSwipesEnabled});
-  }
-  
-  // Включаем вертикальные свайпы
-  toggleVerticalSwipes(true);
-
-  // Запрещаем изменение масштаба через жесты на устройствах с сенсорным экраном
-  document.addEventListener('gesturestart', function (e) {
-      e.preventDefault();
-  });
-
-  document.addEventListener('touchmove', function (event) {
-      if (event.scale !== 1) {
-          event.preventDefault();
-      }
-  }, { passive: false });
-});
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="telegramWebApp.js"></script>
+    <meta charset="UTF-8">
+    <title>Telegram Mini App</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="index.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="background">
+        <div class="white_square">
+            <img class="ton_pic" src="fff.png" alt="ошибка">
+            <div class="ton_work">TON WORK</div>
+            <div class="text">
+                Freelancing platform on<br>
+                Telegram. Join the community of<br>
+                professionals.
+            </div>
+        </div>
+        <button type="button" onclick="window.location.href='create_acc/create_acc.html'" name="button" class='create_profile'>Create Profile</button>
+    </div>
+    <script src="index.js"></script>
+<!-- Code injected by live-server -->
+<script>
+	// <![CDATA[  <-- For SVG support
+	if ('WebSocket' in window) {
+		(function () {
+			function refreshCSS() {
+				var sheets = [].slice.call(document.getElementsByTagName("link"));
+				var head = document.getElementsByTagName("head")[0];
+				for (var i = 0; i < sheets.length; ++i) {
+					var elem = sheets[i];
+					var parent = elem.parentElement || head;
+					parent.removeChild(elem);
+					var rel = elem.rel;
+					if (elem.href && typeof rel != "string" || rel.length == 0 || rel.toLowerCase() == "stylesheet") {
+						var url = elem.href.replace(/(&|\?)_cacheOverride=\d+/, '');
+						elem.href = url + (url.indexOf('?') >= 0 ? '&' : '?') + '_cacheOverride=' + (new Date().valueOf());
+					}
+					parent.appendChild(elem);
+				}
+			}
+			var protocol = window.location.protocol === 'http:' ? 'ws://' : 'wss://';
+			var address = protocol + window.location.host + window.location.pathname + '/ws';
+			var socket = new WebSocket(address);
+			socket.onmessage = function (msg) {
+				if (msg.data == 'reload') window.location.reload();
+				else if (msg.data == 'refreshcss') refreshCSS();
+			};
+			if (sessionStorage && !sessionStorage.getItem('IsThisFirstTime_Log_From_LiveServer')) {
+				console.log('Live reload enabled.');
+				sessionStorage.setItem('IsThisFirstTime_Log_From_LiveServer', true);
+			}
+		})();
+	}
+	else {
+		console.error('Upgrade your browser. This Browser is NOT supported WebSocket for Live-Reloading.');
+	}
+	// ]]>
+</script>
+</body>
+</html>
