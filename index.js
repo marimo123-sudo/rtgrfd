@@ -20,7 +20,7 @@ if (window.devicePixelRatio !== 1) { // Костыль для определен
 document.addEventListener('DOMContentLoaded', (event) => {
   Telegram.WebApp.ready();
   Telegram.WebApp.setHeaderColor('#000000'); // Устанавливаем черный цвет рамки
-  Telegram.WebApp.isVerticalSwipesEnabled = true
+  Telegram.WebApp.enableVerticalSwipes();
   const user = Telegram.WebApp.initDataUnsafe.user;
   if (user) {
     console.log(`User ID: ${user.id}`);
