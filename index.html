@@ -1,26 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <title></title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <link rel="stylesheet" href="index.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;400;700&display=swap" rel="stylesheet">
-  </head>
-  <body>
-    <div class="background">
-      <div class="white_square">
-        <img class="ton_pic" src="fff.png" alt="ошибка">
-        <div class="ton_work">TON WORK</div>
-        <div class="text">
-          Freelancing platform on<br>
-          Telegram. Join the community of<br>
-          professionals.
-        </div>
-      </div>
-      <button type="button" onclick="window.location.href='create_acc/create_acc.html'" name="button" class='create_profile'>Create Profile</button>
-    </div>
-    <script src="https://telegram.org/js/telegram-web-app.js"></script> <!-- Подключение API -->
-    <script src="index.js"></script>
-  </body>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Responsive Mini App</title>
+  <style>
+    :root {
+      --tg-viewport-stable-height: 100vh; /* Значение по умолчанию */
+    }
+
+    .content {
+      height: calc(var(--tg-viewport-stable-height) - 20px); /* Пример использования переменной */
+    }
+  </style>
+</head>
+<body>
+  <div class="content">
+    <!-- Ваше содержимое здесь -->
+  </div>
+
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <script>
+    window.onload = function() {
+      Telegram.WebApp.ready();
+      
+      // Устанавливаем переменную CSS для высоты
+      Telegram.WebApp.onEvent('viewportChanged', function(data) {
+        if (data.isStateStable) {
+          document.documentElement.style.setProperty('--tg-viewport-stable-height', `${data.height}px`);
+        }
+      });
+    };
+  </script>
+</body>
 </html>
