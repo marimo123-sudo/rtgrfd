@@ -53,13 +53,18 @@
         if (event.scale !== 1) { event.preventDefault(); }
       }, { passive: false });
 
-      Telegram.WebApp.ready().then(() => {
-        const user = Telegram.WebApp.getUser();
-        const botAPIVersion = user.version;
-        console.log(`Bot API version in Telegram app: ${botAPIVersion}`);
-      }).catch(error => {
-        console.error('Error initializing Telegram WebApp:', error);
-      });
+      if (Telegram.WebApp) {
+        Telegram.WebApp.ready().then(() => {
+          const user = Telegram.WebApp.getUser();
+          const botAPIVersion = user.version;
+          console.log(`Bot API version in Telegram app: ${botAPIVersion}`);
+        }).catch(error => {
+          console.error('Error initializing Telegram WebApp:', error);
+        });
+      } else {
+          console.error('Telegram WebApp library not loaded or available.');
+      }
+
 
     </script>
   </body>
