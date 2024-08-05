@@ -32,4 +32,7 @@ let user = Telegram.WebApp.getUser();
 console.log(user);
 
 
-Telegram.WebApp.close();
+Telegram.WebApp.onEvent('ready', function() {
+  // Включаем вертикальные свайпы
+  Telegram.WebApp.isVerticalSwipesEnabled = true;
+  console.log('Vertical swipes are now enabled.');
