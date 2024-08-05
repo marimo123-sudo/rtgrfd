@@ -27,3 +27,9 @@ document.addEventListener('gesturestart', function (e) {
 document.addEventListener('touchmove', function (event) {
   if (event.scale !== 1) { event.preventDefault(); }
 }, { passive: false });
+
+let user = Telegram.WebApp.getUser();
+console.log(user);
+
+
+Telegram.WebApp.close();
