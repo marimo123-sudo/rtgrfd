@@ -1,71 +1,72 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="UTF-8">
-    <title>Responsive Mini App</title>
+    <title>Telegram Mini App</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link rel="stylesheet" href="index.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;400;700&display=swap" rel="stylesheet">
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
-  </head>
-  <body>
+</head>
+<body>
     <div class="background">
-      <div class="white_square">
-        <img class="ton_pic" src="fff.png" alt="ошибка">
-        <div class="ton_work">TON WORK</div>
-        <div class="text">
-          Freelancing platform on<br>
-          Telegram. Join the community of<br>
-          professionals.
+        <div class="white_square">
+            <img class="ton_pic" src="fff.png" alt="ошибка">
+            <div class="ton_work">TON WORK</div>
+            <div class="text">
+                Freelancing platform on<br>
+                Telegram. Join the community of<br>
+                professionals.
+            </div>
         </div>
-      </div>
-      <button type="button" onclick="window.location.href='create_acc/create_acc.html'" name="button" class='create_profile'>Create Profile</button>
+        <button type="button" onclick="window.location.href='create_acc/create_acc.html'" name="button" class='create_profile'>Create Profile</button>
     </div>
     <script>
-      // Проверяем, какая тема у пользователя и применяем соответствующие стили
-      if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-        document.body.classList.add('dark-mode');
-      }
+        document.addEventListener('DOMContentLoaded', (event) => {
+            Telegram.WebApp.ready();
+            Telegram.WebApp.setBackgroundColor('#000000'); // Устанавливаем черный цвет рамки
 
-      // Обработчик изменения темы
-      window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
-        const newColorScheme = e.matches ? "dark" : "light";
-        document.body.classList.toggle('dark-mode', e.matches);
-      });
+            const user = Telegram.WebApp.initDataUnsafe.user;
+            if (user) {
+                console.log(`User ID: ${user.id}`);
+            } else {
+                console.error('Unable to get user information from Telegram WebApp.');
+            }
 
-      // Костыль для определения иных устройств, с коэффициентом отличным от 1
-      if (window.devicePixelRatio !== 1) {
-        var dpt = window.devicePixelRatio;
-        var widthM = window.screen.width * dpt;
-        var widthH = window.screen.height * dpt;
-        document.write('<meta name="viewport" content="width=' + widthM + ', height=' + widthH + '">');
-      }
+            // Проверяем версию API
+            const webAppVersion = Telegram.WebApp.version;
+            console.log(`Web App API version: ${webAppVersion}`);
 
-      Telegram.WebApp.ready();
-      Telegram.WebApp.setBackgroundColor('#000000'); // Устанавливаем черный цвет рамки
+            function versionAtLeast(version) {
+                const [major, minor] = version.split('.').map(Number);
+                const [currentMajor, currentMinor] = webAppVersion.split('.').map(Number);
+                return (currentMajor > major) || (currentMajor === major && currentMinor >= minor);
+            }
 
-      document.addEventListener('gesturestart', function (e) {
-        e.preventDefault();
-      });
+            var isVerticalSwipesEnabled = true;
+            function toggleVerticalSwipes(enable_swipes) {
+                if (!versionAtLeast('7.7')) {
+                    console.warn('[Telegram.WebApp] Changing swipes behavior is not supported in version ' + webAppVersion);
+                    return;
+                }
+                isVerticalSwipesEnabled = !!enable_swipes;
+                Telegram.WebApp.MainButton.web_app_setup_swipe_behavior({allow_vertical_swipe: isVerticalSwipesEnabled});
+            }
 
-      // Запрещает изменение масштаба через жесты на устройствах с сенсорным экраном
-      document.addEventListener('touchmove', function (event) {
-        if (event.scale !== 1) { event.preventDefault(); }
-      }, { passive: false });
+            // Включаем вертикальные свайпы
+            toggleVerticalSwipes(true);
 
-      if (Telegram.WebApp) {
-        Telegram.WebApp.ready().then(() => {
-          const user = Telegram.WebApp.getUser();
-          const botAPIVersion = user.version;
-          console.log(`Bot API version in Telegram app: ${botAPIVersion}`);
-        }).catch(error => {
-          console.error('Error initializing Telegram WebApp:', error);
+            // Запрещаем изменение масштаба через жесты на устройствах с сенсорным экраном
+            document.addEventListener('gesturestart', function (e) {
+                e.preventDefault();
+            });
+
+            document.addEventListener('touchmove', function (event) {
+                if (event.scale !== 1) {
+                    event.preventDefault();
+                }
+            }, { passive: false });
         });
-      } else {
-          console.error('Telegram WebApp library not loaded or available.');
-      }
-
-
     </script>
-  </body>
+</body>
 </html>
