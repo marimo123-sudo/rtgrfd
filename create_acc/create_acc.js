@@ -72,3 +72,23 @@ textarea.addEventListener('keydown', function(event) {
       event.preventDefault();
   }
 });
+
+
+document.addEventListener('DOMContentLoaded', (event) => {
+  Telegram.WebApp.ready();
+  
+  // Пример показа кнопки "Назад"
+  Telegram.WebApp.BackButton.isVisible = true
+  
+  // Пример скрытия кнопки "Назад"
+  // BackButton.hide();
+  
+  // Установка обработчика нажатия на кнопку "Назад"
+  Telegram.WebApp.BackButton.onClick(function() {
+    console.log('Back button was clicked');
+    // Добавьте вашу логику здесь
+  });
+  
+  // Инициализация Telegram WebApp
+  Telegram.WebApp.setHeaderColor('#000000'); // Устанавливаем черный цвет рамки
+});
