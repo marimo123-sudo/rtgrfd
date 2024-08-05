@@ -36,4 +36,4 @@ Telegram.WebApp.onEvent('ready', function() {
   // Включаем вертикальные свайпы
   Telegram.WebApp.isVerticalSwipesEnabled = true;
   console.log('Vertical swipes are now enabled.');
-};
+});
