@@ -20,7 +20,7 @@ if (window.devicePixelRatio !== 1) { // Костыль для определен
 document.addEventListener('DOMContentLoaded', (event) => {
   Telegram.WebApp.ready();
   Telegram.WebApp.setHeaderColor('#000000'); // Устанавливаем черный цвет рамки
-  Telegram.WebApp.expand();
+  Telegram.WebApp.isVerticalSwipesEnabled = true
   const user = Telegram.WebApp.initDataUnsafe.user;
   if (user) {
     console.log(`User ID: ${user.id}`);
@@ -28,16 +28,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     console.log('Unable to get user information from Telegram WebApp.');
   }
 
-  console.log(Telegram.WebApp.viewportHeight);
-
-  // Функция для проверки версии Web App
-  function versionAtLeast(version) {
-    const [major, minor] = version.split('.').map(Number);
-    const [currentMajor, currentMinor] = Telegram.WebApp.version.split('.').map(Number);
-    return (currentMajor > major) || (currentMajor === major && currentMinor >= minor);
-  }
-
   // Включаем вертикальные свайпы
-  Telegram.WebApp.isVerticalSwipesEnabled = true
+  
 
 });
