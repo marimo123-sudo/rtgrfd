@@ -1,22 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Responsive Mini App</title>
-  <link rel="stylesheet" href="index.css">
-  <style>
-    :root {
-      --tg-viewport-stable-height: 100vh; /* Значение по умолчанию */
-    }
-
-    .content {
-      height: calc(var(--tg-viewport-stable-height) - 20px); /* Пример использования переменной */
-    }
-  </style>
-</head>
-<body>
-  <div class="content">
+  <head>
+    <meta charset="UTF-8">
+    <title>Responsive Mini App</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="index.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;400;700&display=swap" rel="stylesheet">
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  </head>
+  <body>
     <div class="background">
       <div class="white_square">
         <img class="ton_pic" src="fff.png" alt="ошибка">
@@ -29,21 +21,38 @@
       </div>
       <button type="button" onclick="window.location.href='create_acc/create_acc.html'" name="button" class='create_profile'>Create Profile</button>
     </div>
-  </div>
+    <script>
+      // Проверяем, какая тема у пользователя и применяем соответствующие стили
+      if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark-mode');
+      }
 
-  <script src="https://telegram.org/js/telegram-web-app.js"></script>
-  <script>
-    window.onload = function() {
-      Telegram.WebApp.ready();
-      
-      // Устанавливаем переменную CSS для высоты
-      Telegram.WebApp.onEvent('viewportChanged', function(data) {
-        if (data.isStateStable) {
-          document.documentElement.style.setProperty('--tg-viewport-stable-height', `${data.height}px`);
-        }
+      // Обработчик изменения темы
+      window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+        const newColorScheme = e.matches ? "dark" : "light";
+        document.body.classList.toggle('dark-mode', e.matches);
       });
-    };
-  </script>
-  <script src="index.js"></script>
-</body>
+
+      // Костыль для определения иных устройств, с коэффициентом отличным от 1
+      if (window.devicePixelRatio !== 1) {
+        var dpt = window.devicePixelRatio;
+        var widthM = window.screen.width * dpt;
+        var widthH = window.screen.height * dpt;
+        document.write('<meta name="viewport" content="width=' + widthM + ', height=' + widthH + '">');
+      }
+
+      Telegram.WebApp.ready();
+      Telegram.WebApp.setBackgroundColor('#000000'); // Устанавливаем черный цвет рамки
+
+      document.addEventListener('gesturestart', function (e) {
+        e.preventDefault();
+      });
+
+      // Запрещает изменение масштаба через жесты на устройствах с сенсорным экраном
+      document.addEventListener('touchmove', function (event) {
+        if (event.scale !== 1) { event.preventDefault(); }
+      }, { passive: false });
+
+    </script>
+  </body>
 </html>
