@@ -16,24 +16,51 @@ if (window.devicePixelRatio !== 1) { // Костыль для определен
   document.write('<meta name="viewport" content="width=' + widthM+ ', height=' + widthH + '">');
 }
 
-Telegram.WebApp.ready();
-Telegram.WebApp.setBackgroundColor('#000000'); // Устанавливаем черный цвет рамки
-
-document.addEventListener('gesturestart', function (e) {
-  e.preventDefault();
-});
-
-// Запрещает изменение масштаба через жесты на устройствах с сенсорным экраном
-document.addEventListener('touchmove', function (event) {
-  if (event.scale !== 1) { event.preventDefault(); }
-}, { passive: false });
-
-let user = Telegram.WebApp.getUser();
-console.log(user);
 
 
-Telegram.WebApp.onEvent('ready', function() {
+
+document.addEventListener('DOMContentLoaded', (event) => {
+  Telegram.WebApp.ready();
+  Telegram.WebApp.setBackgroundColor('#000000'); // Устанавливаем черный цвет рамки
+
+  const user = Telegram.WebApp.initDataUnsafe.user;
+  if (user) {
+      console.log(`User ID: ${user.id}`);
+  } else {
+      console.log('Unable to get user information from Telegram WebApp.');
+  }
+
+  // Проверяем версию API
+  const webAppVersion = Telegram.WebApp.version;
+  console.log(`Web App API version: ${webAppVersion}`);
+
+  function versionAtLeast(version) {
+      const [major, minor] = version.split('.').map(Number);
+      const [currentMajor, currentMinor] = webAppVersion.split('.').map(Number);
+      return (currentMajor > major) || (currentMajor === major && currentMinor >= minor);
+  }
+
+  var isVerticalSwipesEnabled = true;
+  function toggleVerticalSwipes(enable_swipes) {
+      if (!versionAtLeast('7.7')) {
+          console.warn('[Telegram.WebApp] Changing swipes behavior is not supported in version ' + webAppVersion);
+          return;
+      }
+      isVerticalSwipesEnabled = !!enable_swipes;
+      Telegram.WebApp.MainButton.web_app_setup_swipe_behavior({allow_vertical_swipe: isVerticalSwipesEnabled});
+  }
+  
   // Включаем вертикальные свайпы
-  Telegram.WebApp.isVerticalSwipesEnabled = true;
-  console.log('Vertical swipes are now enabled.');
+  toggleVerticalSwipes(true);
+
+  // Запрещаем изменение масштаба через жесты на устройствах с сенсорным экраном
+  document.addEventListener('gesturestart', function (e) {
+      e.preventDefault();
+  });
+
+  document.addEventListener('touchmove', function (event) {
+      if (event.scale !== 1) {
+          event.preventDefault();
+      }
+  }, { passive: false });
 });
